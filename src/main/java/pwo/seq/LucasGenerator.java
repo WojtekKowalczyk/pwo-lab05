@@ -18,10 +18,16 @@ public class LucasGenerator extends FibonacciGenerator {
 
     @Override
     public BigDecimal nextTerm() {
-        if (lastIndex == 0) {
-            lastIndex++;
-            return new BigDecimal(2);
+        if (lastIndex >= 0) {
+            current = f_2;
+            f_2 = f_1;
+            f_1 = current.add(f_2);
+        } else {
+            // Zabezpieczenie przed próbą pobrania kolejnego elementu po osiągnięciu indeksu 0
+            current = null;
         }
-        return super.nextTerm();
+
+        lastIndex--;
+        return current;
     }
 }

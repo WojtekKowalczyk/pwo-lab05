@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 public class FibonacciGenerator extends Generator {
 
     public FibonacciGenerator() {
-        current = new BigDecimal(0);
-        f_1 = new BigDecimal(1);
-        f_2 = new BigDecimal(0);
+        reset();
     }
 
     @Override
@@ -16,22 +14,23 @@ public class FibonacciGenerator extends Generator {
         current = new BigDecimal(0);
         f_1 = new BigDecimal(1);
         f_2 = new BigDecimal(0);
+
+        // Resetujemy indeks do wartości 100
+        lastIndex = 100;
     }
 
     @Override
     public BigDecimal nextTerm() {
-
-        if (lastIndex > 1) {
-            current = f_1.add(f_2);
+        if (lastIndex >= 0) {
+            current = f_2;
             f_2 = f_1;
-            f_1 = current;
-        } else if (lastIndex == 1) {
-            current = new BigDecimal(1);
+            f_1 = current.add(f_2);
         } else {
-            current = new BigDecimal(0);
+            // Zabezpieczenie przed próbą pobrania kolejnego elementu po osiągnięciu indeksu 0
+            current = null;
         }
 
-        lastIndex++;
+        lastIndex--;
         return current;
     }
 }
